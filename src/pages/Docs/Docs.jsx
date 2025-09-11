@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAllData } from "../../api/data";
+import { getAllData, deleteOne } from "../../api/data";
 import "./Docs.css";
 
 function Docs() {
@@ -12,6 +12,11 @@ function Docs() {
       .then((result) => setData(result.docs))
       .catch((err) => console.error(err));
   }, []);
+
+  const handleDelete = async (id) => {
+    deleteOne(id);
+    setData(data.filter((item) => item.id !== id));
+  };
 
   return (
     <div>
@@ -25,6 +30,7 @@ function Docs() {
             <th>ID</th>
             <th>Title</th>
             <th>Content</th>
+            <th className="th-delete"></th>
           </tr>
         </thead>
         <tbody>
@@ -33,6 +39,14 @@ function Docs() {
               <td>{item.id}</td>
               <td>{item.title}</td>
               <td>{item.content}</td>
+              <td>
+                <button
+                  className="delete-btn"
+                  onClick={() => handleDelete(item.id)}
+                >
+                  Delete
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>

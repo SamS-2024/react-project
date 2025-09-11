@@ -25,3 +25,14 @@ export async function addOne(body) {
         console.error("Failed to add document:", err)
     }
 }
+
+export async function deleteOne(id) {
+    try {
+        const res = await fetch(`${path}/delete/${id}`, {
+            method: "DELETE",
+        });
+        return res.json();
+    } catch (err) {
+        console.error("Failed to delete document:", err)
+    }
+}
