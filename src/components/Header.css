@@ -1,0 +1,25 @@
+header {
+    background-color: #1a1a1a;
+    color: #fff;
+    padding: 1.4rem 3rem;
+    width: 100%;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  padding: 1rem 0;
+}
+
+nav a {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1.5rem;
+  transition: color 0.3s;
+}
+
+/* nav a:hover {
+  color: #646cff;
+} */
