@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
-import { getAllData } from "../api/data";
+import { useNavigate } from "react-router-dom";
+import { getAllData, deleteOne } from "../../api/data";
 import "./Docs.css";
 
 function Docs() {
   const [data, setData] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getAllData()
@@ -11,15 +13,24 @@ function Docs() {
       .catch((err) => console.error(err));
   }, []);
 
+  const handleDelete = async (id) => {
+    deleteOne(id);
+    setData(data.filter((item) => item.id !== id));
+  };
+
   return (
     <div>
-      <h2>Documents</h2>
+      <div className="head">
+        <h2>Documents</h2>
+        <button onClick={() => navigate("/add")}>Add new</button>
+      </div>
       <table>
         <thead>
           <tr>
             <th>ID</th>
             <th>Title</th>
             <th>Content</th>
+            <th className="th-delete"></th>
           </tr>
         </thead>
         <tbody>
@@ -28,6 +39,14 @@ function Docs() {
               <td>{item.id}</td>
               <td>{item.title}</td>
               <td>{item.content}</td>
+              <td>
+                <button
+                  className="delete-btn"
+                  onClick={() => handleDelete(item.id)}
+                >
+                  Delete
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>
