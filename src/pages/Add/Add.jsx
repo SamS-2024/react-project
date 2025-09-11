@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { addOne } from "../../api/data";
+import "./Add.css";
 
 function AddDoc() {
   const [title, setTitle] = useState("");

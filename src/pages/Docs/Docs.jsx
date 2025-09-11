@@ -15,8 +15,10 @@ function Docs() {
 
   return (
     <div>
-      <button onClick={() => navigate("/add")}>Add new</button>
-      <h2>Documents</h2>
+      <div className="head">
+        <h2>Documents</h2>
+        <button onClick={() => navigate("/add")}>Add new</button>
+      </div>
       <table>
         <thead>
           <tr>
