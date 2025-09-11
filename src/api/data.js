@@ -1,4 +1,5 @@
-const path = "http://localhost:3000";
+const port = import.meta.env.VITE_PORT;
+const path = "http://localhost:" + port;
 
 export async function getAllData() {
     try {
