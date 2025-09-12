@@ -26,8 +26,8 @@ function GetOneDoc({ id }) {
           </tr>
         </thead>
         <tbody>
-          <tr key={doc.id}>
-            <td>{doc.id}</td>
+          <tr key={doc._id}>
+            <td>{doc._id}</td>
             <td>{doc.title}</td>
             <td>{doc.content}</td>
           </tr>
