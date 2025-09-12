@@ -13,6 +13,7 @@
 main {
   padding: 2rem;
   margin: 0 auto;
+  min-height: 100vh;
 }
 
 @media (prefers-color-scheme: light) {

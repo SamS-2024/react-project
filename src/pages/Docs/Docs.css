@@ -48,7 +48,7 @@ tbody tr:nth-child(even) {
   width: 0;
 }
 
-.delete-btn {
+.delete-btn, .update-btn {
   background-color: #d9534f;
   color: white;
   border: none;
@@ -57,8 +57,13 @@ tbody tr:nth-child(even) {
   font-size: 14px;
   border-radius: 4px;
   transition: background-color 0.3s ease;
+  margin: 0.3rem;
 }
 
 .delete-btn:hover {
   background-color: #c9302c;
+}
+
+.update-btn {
+   background-color: #0e6691;
 }

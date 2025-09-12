@@ -1,5 +1,5 @@
 header {
-    background-color: #1a1a1a;
+    background-color: #366985;
     color: #fff;
     padding: 1.4rem 3rem;
     width: 100%;
@@ -19,7 +19,3 @@ nav a {
   font-size: 1.5rem;
   transition: color 0.3s;
 }
-
-/* nav a:hover {
-  color: #646cff;
-} */

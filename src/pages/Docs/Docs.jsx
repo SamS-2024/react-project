@@ -18,6 +18,10 @@ function Docs() {
     setData(data.filter((item) => item.id !== id));
   };
 
+  const handleUpdate = (id) => {
+    navigate(`/update/${id}`);
+  };
+
   return (
     <div>
       <div className="head">
@@ -45,6 +49,13 @@ function Docs() {
                   onClick={() => handleDelete(item.id)}
                 >
                   Delete
+                </button>
+
+                <button
+                  className="update-btn"
+                  onClick={() => handleUpdate(item.id)}
+                >
+                  Update
                 </button>
               </td>
             </tr>

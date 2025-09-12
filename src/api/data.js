@@ -11,6 +11,16 @@ export async function getAllData() {
     }
 }
 
+export async function getOne(id) {
+    try {
+        const res = await fetch(`${path}/${id}`);
+        return res.json();
+
+    } catch (err) {
+        console.error("Failed to fetch document:", err)
+  }
+}
+
 export async function addOne(body) {
     try {
         const res = await fetch(`${path}/`, {
@@ -34,5 +44,20 @@ export async function deleteOne(id) {
         return res.json();
     } catch (err) {
         console.error("Failed to delete document:", err)
+    }
+}
+
+export async function updateOne(body) {
+    try {
+        const res = await fetch(`${path}/update`, {
+            method: "POST",
+            body: JSON.stringify(body),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+        return res.json();
+    } catch (err) {
+        console.error("Failed to update document:", err)
     }
 }
