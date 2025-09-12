@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { getOne } from "../api/data";
-import "./Docs.css";
+import { getOne } from "../../api/data";
+import "../Docs/Docs.css";
 
 function GetOneDoc({ id }) {
   const [doc, setDoc] = useState(null);

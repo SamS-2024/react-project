@@ -1,5 +1,5 @@
 import { useState } from "react";
-import GetOneDoc from "./GetOneDoc.jsx";
+import GetOneDoc from "../GetOneDoc/GetOneDoc.jsx";
 import "./SearchPage.css";
 
 function SearchPage() {
