@@ -10,8 +10,8 @@ function AddDoc() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(e)
-    addOne({ "title": title, "content": content })
+    console.log(e);
+    await addOne({ title: title, content: content });
 
     navigate("/");
   };
