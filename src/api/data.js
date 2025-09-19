@@ -50,7 +50,7 @@ export async function deleteOne(id) {
 export async function updateOne(body) {
     try {
         const res = await fetch(`${path}/update`, {
-            method: "POST",
+            method: "PUT",
             body: JSON.stringify(body),
             headers: {
                 "Content-Type": "application/json"
