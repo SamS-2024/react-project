@@ -17,8 +17,8 @@ function AddDoc() {
   };
 
   return (
-    <div>
-      <h2>Add New Document</h2>
+    <div className="add-container">
+      <h1>Add New Document</h1>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -31,7 +31,9 @@ function AddDoc() {
           value={content}
           onChange={(e) => setContent(e.target.value)}
         />
-        <button type="submit">Add</button>
+        <button id="submit" type="submit">
+          Add
+        </button>
       </form>
     </div>
   );

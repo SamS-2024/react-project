@@ -18,10 +18,10 @@ button {
 }
 
 table {
-  width: 50%;
+  width: 90%;
+  margin-top: 1.5rem;
   border-collapse: collapse;
   font-family: Arial, sans-serif;
-  margin-top: 20px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -66,4 +66,8 @@ tbody tr:nth-child(even) {
 
 .update-btn {
    background-color: #0e6691;
+}
+
+.add-new-btn {
+  margin-top: 2rem;
 }

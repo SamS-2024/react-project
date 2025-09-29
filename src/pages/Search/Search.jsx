@@ -8,6 +8,7 @@ function Search() {
 
   return (
     <div className="search-container">
+      <h1>Search for a document</h1>
       <input
         value={docId}
         onChange={(e) => setDocId(e.target.value)}

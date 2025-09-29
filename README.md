@@ -39,3 +39,37 @@ The `src` folder contains:
 - `pages`- components that act as views.
 
 Each component may have its own folder with a `.jsx` file and an optional `.css` file.
+
+## Testing with Cypress
+
+### Installation and setup
+
+- Install Cypress as a development dependency:
+
+```
+npm install cypress --save-dev
+```
+
+### Running tests
+
+1. Open a terminal in your project directory.
+
+2. Start Cypress:
+
+```
+npx Cypress open
+```
+
+3. In the Cypress UI:
+
+   - Select E2E Testing
+   - Choose a browser, for example 'Chrome'
+   - Click Start E2E Testing
+
+4. Navigate to a directory or file to view and run the tests.
+
+### Creating new tests
+
+- Create test files inside the cypress/e2e folder.
+
+- Repeat the steps above to run your new tests.

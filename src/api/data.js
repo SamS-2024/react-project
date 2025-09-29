@@ -1,5 +1,6 @@
 const port = import.meta.env.VITE_PORT;
 const path = "http://localhost:" + port;
+// const path = "https://jsramverk-hagt21-fdbhdnf5hrgrcbcc.northeurope-01.azurewebsites.net/"
 
 export async function getAllData() {
     try {

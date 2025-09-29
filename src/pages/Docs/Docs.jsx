@@ -24,10 +24,7 @@ function Docs() {
 
   return (
     <div>
-      <div className="head">
-        <h2>Documents</h2>
-        <button onClick={() => navigate("/add")}>Add new</button>
-      </div>
+      <h1>Documents</h1>
       <table>
         <thead>
           <tr>
@@ -62,6 +59,13 @@ function Docs() {
           ))}
         </tbody>
       </table>
+      <button
+        id="add-btn"
+        className="add-new-btn"
+        onClick={() => navigate("/add")}
+      >
+        Add new
+      </button>
     </div>
   );
 }

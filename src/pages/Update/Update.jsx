@@ -26,7 +26,7 @@ function Update() {
 
   return (
     <div className="update-container">
-      <h2>Update Document {id}</h2>
+      <h2>Update document {id}</h2>
       <input
         value={title}
         onChange={(e) => setTitle(e.target.value)}

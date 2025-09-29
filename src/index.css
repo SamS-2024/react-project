@@ -21,10 +21,13 @@ main {
     color: #213547;
     background-color: #ffffff;
   }
-  /* a:hover {
-    color: #747bff;
-  } */
+
   button {
     background-color: #f9f9f9;
   }
+}
+
+h1 {
+  margin-bottom: 1.5rem;
+  margin-top: 1.5rem;
 }
