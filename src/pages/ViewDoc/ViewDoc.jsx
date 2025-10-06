@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getOne, updateOne } from "../../api/data";
-import "./Update.css";
+import "./ViewDoc.css";
 
-function Update() {
+function ViewDoc() {
   const { id } = useParams(); // Hämtar id från URL.
   const navigate = useNavigate();
 
@@ -24,6 +24,15 @@ function Update() {
     navigate("/"); // Tillbaka till listan
   };
 
+  const handleDelete = async (id) => {
+    deleteOne(id);
+    setData(data.filter((item) => item._id !== id));
+  };
+
+  const handleUpdate = (id) => {
+    navigate(`/update/${id}`);
+  };
+
   return (
     <div className="update-container">
       <h2>Update document {id}</h2>
@@ -37,9 +46,22 @@ function Update() {
         onChange={(e) => setContent(e.target.value)}
         placeholder="Content"
       />
-      <button className="update-btn" onClick={handleSave}>Save</button>
+
+      <button
+        className="update-btn"
+        onClick={() => handleUpdate(id)}
+      >
+        Update
+      </button>
+
+      <button
+        className="delete-btn"
+        onClick={() => handleDelete(id)}
+      >
+        Delete
+      </button>
     </div>
   );
 }
 
-export default Update;
+export default ViewDoc;

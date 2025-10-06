@@ -24,7 +24,7 @@
   min-height: 100px;
 }
 
-.update-btn {
+.delete-btn, .update-btn {
   color: white;
   border: none;
   padding: 0.7rem;
@@ -35,6 +35,14 @@
   max-width: 500px;
   width: 100%;
   margin: auto;
+}
+
+.delete-btn {
+  background-color: #d9534f;
+}
+
+.delete-btn:hover {
+  background-color: #c9302c;
 }
 
 .update-btn {
