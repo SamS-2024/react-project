@@ -29,8 +29,6 @@ function Update() {
     socket.emit("create", id);
     // Skapar en eventlyssnare för "doc"
     socket.on("doc", (data) => {
-      // Uppdaterar editorn utan att markera som egen ändring.
-      // setEditorContent(data.html, false);
       setContent(data.html);
       setTitle(data.title);
     });
@@ -66,7 +64,9 @@ function Update() {
         }}
         placeholder="Content"
       />
-      <button className="update-btn" onClick={handleSave}>Save</button>
+      <button className="update-btn" onClick={handleSave}>
+        Save
+      </button>
     </div>
   );
 }
