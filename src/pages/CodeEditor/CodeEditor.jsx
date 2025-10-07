@@ -5,6 +5,7 @@ import { getOne } from "../../api/data";
 import Editor from "@monaco-editor/react";
 import "./CodeEditor.css";
 import { execJs } from "../../api/execjs";
+import { socket } from "../../App.jsx";
 
 function CodeEditor() {
   const { id } = useParams(); // Hämtar id från URL.
@@ -90,7 +91,9 @@ function CodeEditor() {
         height="60vh"
         defaultLanguage="javascript"
         theme="vs-dark"
-        defaultValue={content}
+        // defaultValue={content}
+        // För att kunna uppdatera samtidigt.
+        value={content}
         onChange={(value) => {
           setContent(value);
           // Sockets
