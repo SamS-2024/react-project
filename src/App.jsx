@@ -1,4 +1,6 @@
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
+import { io } from "socket.io-client";
+import { useEffect } from "react";
 import Docs from "./pages/Docs/Docs.jsx";
 import AddDoc from "./pages/Add/Add.jsx";
 import Search from "./pages/Search/Search.jsx";
@@ -7,7 +9,19 @@ import Header from "./components/Header/Header.jsx";
 import Footer from "./components/Footer/Footer.jsx";
 import "./App.css";
 
+const port = import.meta.env.VITE_PORT;
+const SERVER_URL = "http://localhost:" + port;
+
+let socket;
+
 function App() {
+  useEffect(() => {
+    socket = io(SERVER_URL);
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
   return (
     <>
       <Router>
@@ -27,3 +41,4 @@ function App() {
 }
 
 export default App;
+export { socket };
