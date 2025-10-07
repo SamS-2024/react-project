@@ -77,6 +77,9 @@ function CodeEditor() {
                 theme="vs-dark"
                 defaultValue={content}
                 onChange={(value) => setContent(value)}
+                options={{
+                    padding: { top: 16}
+                }}
             />
             <h3>Output:</h3>
             {running ? (
