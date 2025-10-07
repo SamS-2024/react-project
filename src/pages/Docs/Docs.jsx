@@ -31,6 +31,7 @@ function Docs() {
             <th>ID</th>
             <th>Title</th>
             <th>Content</th>
+            <th>Type</th>
           </tr>
         </thead>
         <tbody>
@@ -43,6 +44,7 @@ function Docs() {
               <td>{item._id}</td>
               <td>{item.title}</td>
               <td>{item.content}</td>
+              <td>{item.type || "text"}</td>
             </tr>
           ))}
         </tbody>
