@@ -31,30 +31,20 @@ function Docs() {
             <th>ID</th>
             <th>Title</th>
             <th>Content</th>
-            <th className="th-delete"></th>
+            <th>Type</th>
           </tr>
         </thead>
         <tbody>
           {data.map((item) => (
-            <tr key={item._id}>
+            <tr 
+              key={item._id}
+              onClick={() => navigate(`/view/${item._id}`)}
+              style={{ cursor: "pointer" }}
+            >
               <td>{item._id}</td>
               <td>{item.title}</td>
               <td>{item.content}</td>
-              <td>
-                <button
-                  className="delete-btn"
-                  onClick={() => handleDelete(item._id)}
-                >
-                  Delete
-                </button>
-
-                <button
-                  className="update-btn"
-                  onClick={() => handleUpdate(item._id)}
-                >
-                  Update
-                </button>
-              </td>
+              <td>{item.type || "text"}</td>
             </tr>
           ))}
         </tbody>

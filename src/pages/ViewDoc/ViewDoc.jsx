@@ -1,32 +1,42 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getOne, updateOne } from "../../api/data";
-import "./Update.css";
+import { getOne, deleteOne } from "../../api/data";
+import "./ViewDoc.css";
 
-function Update() {
+function ViewDoc() {
   const { id } = useParams(); // Hämtar id från URL.
   const navigate = useNavigate();
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [type, setType] = useState("");
 
   useEffect(() => {
     getOne(id)
       .then((result) => {
         setTitle(result.doc.title);
         setContent(result.doc.content);
+        setType(result.doc.type);
       })
       .catch((err) => console.error(err));
   }, [id]);
 
-  const handleSave = async () => {
-    await updateOne({ id, title, content });
+  const handleDelete = async (id) => {
+    deleteOne(id);
     navigate("/"); // Tillbaka till listan
   };
 
+  const handleUpdate = (id) => {
+    navigate(`/update/${id}`);
+  };
+
+  const handleCode = (id) => {
+    navigate(`/code/${id}`);
+  }
+
   return (
     <div className="update-container">
-      <h2>Update document {id}</h2>
+      <h2>document {id}</h2>
       <input
         value={title}
         onChange={(e) => setTitle(e.target.value)}
@@ -37,9 +47,31 @@ function Update() {
         onChange={(e) => setContent(e.target.value)}
         placeholder="Content"
       />
-      <button className="update-btn" onClick={handleSave}>Save</button>
+
+      {type === "code" && (
+        <button
+          className="code-btn"
+          onClick={() => handleCode(id)}
+        >
+          Code
+        </button>
+      )}
+
+      <button
+        className="update-btn"
+        onClick={() => handleUpdate(id)}
+      >
+        Update
+      </button>
+
+      <button
+        className="delete-btn"
+        onClick={() => handleDelete(id)}
+      >
+        Delete
+      </button>
     </div>
   );
 }
 
-export default Update;
+export default ViewDoc;

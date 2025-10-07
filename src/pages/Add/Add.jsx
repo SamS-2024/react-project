@@ -6,14 +6,18 @@ import "./Add.css";
 function AddDoc() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [type, setType] = useState("text");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(e);
-    await addOne({ title: title, content: content });
-
+    await addOne({ title: title, content: content, type: type });
     navigate("/");
+  };
+
+  const toggleType = () => {
+    setType((prev) => (prev === "text" ? "code" : "text"));
   };
 
   return (
@@ -31,6 +35,12 @@ function AddDoc() {
           value={content}
           onChange={(e) => setContent(e.target.value)}
         />
+        <div className="type">
+          <label>Type:</label>
+          <div className="type-slider" onClick={toggleType}>
+            <div className={`slider ${type}`}>{type.toUpperCase()}</div>
+          </div>
+        </div>
         <button id="submit" type="submit">
           Add
         </button>

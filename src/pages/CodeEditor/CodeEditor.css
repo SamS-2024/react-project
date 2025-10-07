@@ -1,0 +1,87 @@
+.run-btn-code, .update-btn-code {
+    color: white;
+    border: none;
+    padding: 0.7rem;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    float: right;
+    margin: 0 0 0.5rem 0.5rem;
+}
+
+.run-btn-code {
+    background-color: #7b019d;
+}
+
+.run-btn-code:hover {
+    background-color: #5e017a;
+}
+
+.update-btn-code {
+    background-color: #0e6691;
+}
+.update-btn-code:hover {
+    background-color: #034160;
+}
+
+.output-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 120px;
+    color: #ccc;
+    background-color: #1e1e1e;
+    border: 1px solid #333;
+    border-radius: 8px;
+    margin-top: 0.5rem;
+    box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.4);
+}
+
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 70vh;
+    color: #ccc;
+}
+
+.spinner {
+    border: 4px solid #333;
+    border-top: 4px solid #7b019d;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin-bottom: 10px;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.output-box {
+    background-color: #1e1e1e;
+    color: #d4d4d4;
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-top: 0.5rem;
+    font-family: "Fira Code", monospace;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    overflow-y: auto;
+    max-height: 200px;
+    box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.4);
+}
+
+.output-box::before {
+    content: ">";
+    color: #0fa;
+    margin-right: 0.5rem;
+}
