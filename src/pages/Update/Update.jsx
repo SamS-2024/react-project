@@ -4,9 +4,9 @@ import { useParams, useNavigate } from "react-router-dom";
 import { getOne } from "../../api/data";
 
 import "./Update.css";
-import { socket } from "../../App.jsx";
+// import { socket } from "../../App.jsx";
 
-function Update() {
+function Update({ socket }) {
   const { id } = useParams(); // Hämtar id från URL.
   const navigate = useNavigate();
 
@@ -24,18 +24,18 @@ function Update() {
 
   // Sockets
   useEffect(() => {
-    if (!id) return;
+    if (!id || !socket.current) return;
     // Joina rum.
-    socket.emit("create", id);
+    socket.current.emit("create", id);
     // Skapar en eventlyssnare för "doc"
-    socket.on("doc", (data) => {
+    socket.current.on("doc", (data) => {
       setContent(data.html);
       setTitle(data.title);
     });
 
     return () => {
       // Tar bort listener när en komponent 'unmount'.
-      socket.off("doc");
+      socket.current.off("doc");
     };
   }, [id]);
 
@@ -52,7 +52,11 @@ function Update() {
         value={title}
         onChange={(e) => {
           setTitle(e.target.value);
-          socket.emit("doc", { _id: id, title: e.target.value, html: content });
+          socket.current.emit("doc", {
+            _id: id,
+            title: e.target.value,
+            html: content,
+          });
         }}
         placeholder="Title"
       />
@@ -60,7 +64,11 @@ function Update() {
         value={content}
         onChange={(e) => {
           setContent(e.target.value);
-          socket.emit("doc", { _id: id, title: title, html: e.target.value });
+          socket.current.emit("doc", {
+            _id: id,
+            title: title,
+            html: e.target.value,
+          });
         }}
         placeholder="Content"
       />

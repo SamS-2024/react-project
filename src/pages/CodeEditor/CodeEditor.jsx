@@ -5,9 +5,9 @@ import { getOne } from "../../api/data";
 import Editor from "@monaco-editor/react";
 import "./CodeEditor.css";
 import { execJs } from "../../api/execjs";
-import { socket } from "../../App.jsx";
+// import { socket } from "../../App.jsx";
 
-function CodeEditor() {
+function CodeEditor({ socket }) {
   const { id } = useParams(); // Hämtar id från URL.
   const navigate = useNavigate();
 
@@ -29,18 +29,18 @@ function CodeEditor() {
 
   // Sockets
   useEffect(() => {
-    if (!id) return;
+    if (!id || !socket.current) return;
     // Joina rum.
-    socket.emit("create", id);
+    socket.current.emit("create", id);
     // Skapar en eventlyssnare för "doc"
-    socket.on("doc", (data) => {
+    socket.current.on("doc", (data) => {
       setContent(data.html);
       setTitle(data.title);
     });
 
     return () => {
       // Tar bort listener när en komponent 'unmount'.
-      socket.off("doc");
+      socket.current.off("doc");
     };
   }, [id]);
 
@@ -97,7 +97,7 @@ function CodeEditor() {
         onChange={(value) => {
           setContent(value);
           // Sockets
-          socket.emit("doc", { _id: id, title, html: value });
+          socket.current.emit("doc", { _id: id, title, html: value });
         }}
         options={{
           padding: { top: 16 },

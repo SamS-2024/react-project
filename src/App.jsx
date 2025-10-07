@@ -1,6 +1,6 @@
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import { io } from "socket.io-client";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import Docs from "./pages/Docs/Docs.jsx";
 import ViewDoc from "./pages/ViewDoc/ViewDoc.jsx";
 import AddDoc from "./pages/Add/Add.jsx";
@@ -17,11 +17,14 @@ const SERVER_URL = "http://localhost:" + port;
 let socket;
 
 function App() {
+  // Skapar en referens för socket objektet.
+  const socket = useRef(null);
+
   useEffect(() => {
-    socket = io(SERVER_URL);
+    socket.current = io(SERVER_URL);
 
     return () => {
-      socket.disconnect();
+      socket.current.disconnect();
     };
   }, []);
   return (
@@ -34,8 +37,8 @@ function App() {
             <Route path="/view/:id" element={<ViewDoc />} />
             <Route path="/add" element={<AddDoc />} />
             <Route path="/search" element={<Search />} />
-            <Route path="/update/:id" element={<Update />} />
-            <Route path="/code/:id" element={<CodeEditor />} />
+            <Route path="/update/:id" element={<Update socket={socket} />} />
+            <Route path="/code/:id" element={<CodeEditor socket={socket} />} />
           </Routes>
         </main>
       </Router>
@@ -45,4 +48,4 @@ function App() {
 }
 
 export default App;
-export { socket };
+// export { socket };
