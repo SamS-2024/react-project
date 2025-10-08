@@ -24,20 +24,22 @@ function Update({ socket }) {
   // Sockets
   useEffect(() => {
     if (!id || !socket.current) return;
-
+    // Eslint vill att det sparas i en variabel
+    // som används i clean up.
+    const soc = socket.current;
     // Joina rum.
-    socket.current.emit("create", id);
-
+    soc.emit("create", id);
     // Skapar en eventlyssnare för "doc"
-    socket.current.on("doc", (data) => {
-      setTitle(data.title);
+    soc.on("doc", (data) => {
       setContent(data.content);
+      setTitle(data.title);
     });
 
     return () => {
       // Tar bort listener när en komponent 'unmounts'.
-      socket.current.off("doc");
+      soc.off("doc");
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   const redirectToDocs = async () => {
