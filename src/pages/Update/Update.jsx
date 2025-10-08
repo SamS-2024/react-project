@@ -43,7 +43,7 @@ function Update({ socket }) {
   }, [id]);
 
   const redirectToDocs = async () => {
-    navigate("/"); // Tillbaka till listan
+    navigate("/docs"); // Tillbaka till listan
   };
 
   return (

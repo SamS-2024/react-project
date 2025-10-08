@@ -26,18 +26,19 @@ function Docs() {
           </tr>
         </thead>
         <tbody>
-          {data.map((item) => (
-            <tr
-              key={item._id}
-              onClick={() => navigate(`/view/${item._id}`)}
-              style={{ cursor: "pointer" }}
-            >
-              <td>{item._id}</td>
-              <td>{item.title}</td>
-              <td>{item.content}</td>
-              <td>{item.type || "text"}</td>
-            </tr>
-          ))}
+          {data &&
+            data.map((item) => (
+              <tr
+                key={item._id}
+                onClick={() => navigate(`/view/${item._id}`)}
+                style={{ cursor: "pointer" }}
+              >
+                <td>{item._id}</td>
+                <td>{item.title}</td>
+                <td>{item.content}</td>
+                <td>{item.type || "text"}</td>
+              </tr>
+            ))}
         </tbody>
       </table>
       <button

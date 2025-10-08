@@ -31,7 +31,7 @@ function App() {
         <Header />
         <main>
           <Routes>
-            <Route path="/" element={<Docs />} />
+            <Route path="/docs" element={<Docs />} />
             <Route path="/view/:id" element={<ViewDoc />} />
             <Route path="/add" element={<AddDoc />} />
             <Route path="/search" element={<Search />} />

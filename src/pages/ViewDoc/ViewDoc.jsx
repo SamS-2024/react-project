@@ -23,7 +23,7 @@ function ViewDoc() {
 
   const handleDelete = async (id) => {
     deleteOne(id);
-    navigate("/"); // Tillbaka till listan
+    navigate("/docs"); // Tillbaka till listan
   };
 
   const handleUpdate = (id) => {

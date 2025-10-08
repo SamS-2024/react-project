@@ -13,7 +13,7 @@ function AddDoc() {
     e.preventDefault();
     console.log(e);
     await addOne({ title: title, content: content, type: type });
-    navigate("/");
+    navigate("/docs");
   };
 
   const toggleType = () => {
