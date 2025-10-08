@@ -31,6 +31,8 @@ function App() {
         <Header />
         <main>
           <Routes>
+            <Route path="/" element={<Login />} />
+            <Route path="/register" element={<Register />} />
             <Route path="/docs" element={<Docs />} />
             <Route path="/view/:id" element={<ViewDoc />} />
             <Route path="/add" element={<AddDoc />} />

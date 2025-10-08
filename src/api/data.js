@@ -4,7 +4,14 @@ const path = "http://localhost:" + port;
 
 export async function getAllData() {
     try {
-        const res = await fetch(`${path}/`);
+        // Token hämtas från localStorage
+        const token = localStorage.getItem("token");
+        const res = await fetch(`${path}/docs`, {
+            headers: {
+                "Content-Type": "application/json",
+                "x-access-token": token
+            }
+        });
         return res.json();
 
     } catch (err) {
@@ -14,7 +21,13 @@ export async function getAllData() {
 
 export async function getOne(id) {
     try {
-        const res = await fetch(`${path}/${id}`);
+        const token = localStorage.getItem("token");
+        const res = await fetch(`${path}/${id}`, {
+            headers: {
+                "Content-type": "application/json",
+                "x--token": token
+            }
+        });
         return res.json();
 
     } catch (err) {
@@ -24,11 +37,13 @@ export async function getOne(id) {
 
 export async function addOne(body) {
     try {
+        const token = localStorage.getItem("token");
         const res = await fetch(`${path}/`, {
             method: "POST",
             body: JSON.stringify(body),
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "x-access-token": token
             }
         });
         return res.json();
@@ -39,11 +54,45 @@ export async function addOne(body) {
 
 export async function deleteOne(id) {
     try {
+        const token = localStorage.getItem("token");
         const res = await fetch(`${path}/delete/${id}`, {
             method: "DELETE",
+            headers: {
+                "x-access-token": token
+            }
         });
         return res.json();
     } catch (err) {
         console.error("Failed to delete document:", err)
+    }
+}
+
+export async function login(body) {
+    try {
+        const res = await fetch(`${path}/login`, {
+            method: "POST",
+            body: JSON.stringify(body),
+            headers: {
+                "Content-Type": "application/json",
+            }
+        });
+        return res.json();
+    } catch (err) {
+        console.error("Login failed:", err)
+    }
+}
+
+export async function register(body) {
+    try {
+        const res = await fetch(`${path}/register`, {
+            method: "POST",
+            body: JSON.stringify(body),
+            headers: {
+                "Content-Type": "application/json",
+            }
+        });
+        return res.json();
+    } catch (err) {
+        console.error("Register failed:", err)
     }
 }
