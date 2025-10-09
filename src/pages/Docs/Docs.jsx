@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAllData, deleteOne } from "../../api/data";
+import { getAllData } from "../../api/data";
 import "./Docs.css";
 
 function Docs() {
@@ -12,15 +12,6 @@ function Docs() {
       .then((result) => setData(result.docs))
       .catch((err) => console.error(err));
   }, []);
-
-  const handleDelete = async (id) => {
-    deleteOne(id);
-    setData(data.filter((item) => item._id !== id));
-  };
-
-  const handleUpdate = (id) => {
-    navigate(`/update/${id}`);
-  };
 
   return (
     <div>
@@ -36,7 +27,7 @@ function Docs() {
         </thead>
         <tbody>
           {data.map((item) => (
-            <tr 
+            <tr
               key={item._id}
               onClick={() => navigate(`/view/${item._id}`)}
               style={{ cursor: "pointer" }}

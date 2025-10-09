@@ -1,6 +1,6 @@
 const port = import.meta.env.VITE_PORT;
-//const path = "http://localhost:" + port;
-const path = "https://jsramverk-hagt21-fdbhdnf5hrgrcbcc.northeurope-01.azurewebsites.net/"
+const path = "http://localhost:" + port;
+//const path = "https://jsramverk-hagt21-fdbhdnf5hrgrcbcc.northeurope-01.azurewebsites.net/"
 
 export async function getAllData() {
     try {
@@ -45,20 +45,5 @@ export async function deleteOne(id) {
         return res.json();
     } catch (err) {
         console.error("Failed to delete document:", err)
-    }
-}
-
-export async function updateOne(body) {
-    try {
-        const res = await fetch(`${path}/update`, {
-            method: "PUT",
-            body: JSON.stringify(body),
-            headers: {
-                "Content-Type": "application/json"
-            }
-        });
-        return res.json();
-    } catch (err) {
-        console.error("Failed to update document:", err)
     }
 }

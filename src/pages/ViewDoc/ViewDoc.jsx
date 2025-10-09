@@ -32,11 +32,11 @@ function ViewDoc() {
 
   const handleCode = (id) => {
     navigate(`/code/${id}`);
-  }
+  };
 
   return (
     <div className="update-container">
-      <h2>document {id}</h2>
+      <h2>Document {id}</h2>
       <input
         value={title}
         onChange={(e) => setTitle(e.target.value)}
@@ -49,25 +49,16 @@ function ViewDoc() {
       />
 
       {type === "code" && (
-        <button
-          className="code-btn"
-          onClick={() => handleCode(id)}
-        >
+        <button className="code-btn" onClick={() => handleCode(id)}>
           Code
         </button>
       )}
 
-      <button
-        className="update-btn"
-        onClick={() => handleUpdate(id)}
-      >
+      <button className="update-btn" onClick={() => handleUpdate(id)}>
         Update
       </button>
 
-      <button
-        className="delete-btn"
-        onClick={() => handleDelete(id)}
-      >
+      <button className="delete-btn" onClick={() => handleDelete(id)}>
         Delete
       </button>
     </div>
