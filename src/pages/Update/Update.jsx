@@ -44,7 +44,7 @@ function Update({ socket }) {
 
   const redirectToDocs = () => {
     // Använder timeout för visning pga fördröjning i backend timeouten i sparandet.
-    setTimeout(() => navigate("/"), 200);
+    setTimeout(() => navigate("/"), 2000);
   };
 
   return (

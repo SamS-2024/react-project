@@ -5,11 +5,16 @@ import "./Docs.css";
 
 function Docs() {
   const [data, setData] = useState([]);
+  const [token, setToken] = useState(localStorage.getItem("token"));
+
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) return;
+    const storedToken = localStorage.getItem("token");
+    setToken(storedToken);
+
+    if (!storedToken) return;
+
     getAllData()
       .then((result) => {
         if (result && result.docs) {
@@ -26,7 +31,7 @@ function Docs() {
 
   return (
     <>
-      {data.length > 0 ? (
+      {token ? (
         <div>
           <h1>Documents</h1>
           <table>

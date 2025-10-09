@@ -14,7 +14,7 @@ function Register() {
     e.preventDefault();
     const result = await register({ email, password });
     if (result.data) {
-      navigate("/");
+      navigate("/login");
     } else {
       alert("User already exists, please enter another email adress.");
     }
