@@ -1,13 +1,12 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
 import "./Header.css";
 
 function Header() {
   return (
     <header>
       <nav>
-        <Link to="/">Home</Link>
-        <Link to="/add">Add Document</Link>
-        <Link to="/search">Search</Link>
+        <Link to="/">Documents</Link>
       </nav>
     </header>
   );

@@ -48,7 +48,7 @@ function Login() {
         Login
       </button>
       <button className="to-register-btn" onClick={toRegister}>
-        Register
+        To register
       </button>
     </div>
   );

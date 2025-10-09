@@ -38,7 +38,7 @@ function Register() {
         }}
         placeholder="Password"
       />
-      <button className="login-btn" onClick={handleRegister}>
+      <button className="register-btn" onClick={handleRegister}>
         Register
       </button>
     </div>

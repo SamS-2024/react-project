@@ -54,6 +54,9 @@ function Docs() {
                 ))}
             </tbody>
           </table>
+          <button className="add-new-btn" onClick={() => navigate("/search")}>
+            Search
+          </button>
           <button
             id="add-btn"
             className="add-new-btn"
