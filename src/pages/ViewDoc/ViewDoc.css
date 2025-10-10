@@ -24,7 +24,7 @@
   min-height: 100px;
 }
 
-.delete-btn, .update-btn, .code-btn {
+.delete-btn, .update-btn, .code-btn, .invite-btn {
   color: white;
   border: none;
   padding: 0.7rem;
@@ -58,4 +58,7 @@
 }
 .update-btn:hover {
   background-color: #034160;
+}
+.invite-btn {
+  background-color: #182F3A;
 }

@@ -11,6 +11,7 @@ import Update from "./pages/Update/Update.jsx";
 import CodeEditor from "./pages/CodeEditor/CodeEditor.jsx";
 import Login from "./pages/Login/Login.jsx";
 import Register from "./pages/Register/Register.jsx";
+import Invitation from "./pages/Invitation/Invitaion.jsx";
 import "./App.css";
 
 const port = import.meta.env.VITE_PORT;
@@ -21,7 +22,12 @@ function App() {
   const socket = useRef(null);
 
   useEffect(() => {
-    socket.current = io(SERVER_URL);
+    socket.current = io(SERVER_URL, {
+      // Skickar token till backend för att kunna hantera update doc.
+      auth: {
+        token: localStorage.getItem("token"),
+      },
+    });
 
     return () => {
       socket.current.disconnect();
@@ -41,6 +47,7 @@ function App() {
             <Route path="/search" element={<Search />} />
             <Route path="/update/:id" element={<Update socket={socket} />} />
             <Route path="/code/:id" element={<CodeEditor socket={socket} />} />
+            <Route path="/invite/:id" element={<Invitation />} />
           </Routes>
         </main>
       </Router>

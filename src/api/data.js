@@ -96,3 +96,21 @@ export async function register(body) {
         console.error("Register failed:", err)
     }
 }
+
+    export async function invite(docId, email) {
+    try {
+        const token = localStorage.getItem("token");
+        const res = await fetch(`${path}/invite`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "x-access-token": token
+            },
+            body: JSON.stringify({ docId, email}),
+        });
+
+        return res.json();
+    } catch (err) {
+        console.error("Invitation failed:", err)
+    }
+}
