@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAllData } from "../../api/data";
 import "./Docs.css";
@@ -8,6 +8,12 @@ function Docs() {
   const [token, setToken] = useState(localStorage.getItem("token"));
 
   const navigate = useNavigate();
+
+  const logout = useCallback(() => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  }, [navigate]);
+
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
     setToken(storedToken);
@@ -27,12 +33,7 @@ function Docs() {
         }
         console.error(err);
       });
-  }, []);
-
-  const logout = () => {
-    localStorage.removeItem("token");
-    navigate("/login");
-  };
+  }, [logout]);
 
   return (
     <>

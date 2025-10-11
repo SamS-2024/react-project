@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import { invite, getUsersList } from "../../api/data.js";
 import "./Invitation.css";
@@ -10,9 +10,16 @@ function Invitation() {
   const [message, setMessage] = useState("");
   const [usersList, setUsersList] = useState({ owner: "", allowedUsers: [] });
 
+  const handleUsersList = useCallback(async () => {
+    const res = await getUsersList(docId);
+    if (res) {
+      setUsersList(res);
+    }
+  }, [docId]);
+
   useEffect(() => {
     handleUsersList();
-  }, []);
+  }, [handleUsersList]);
 
   const handleInvite = async () => {
     const res = await invite(docId, userEmail);
@@ -20,13 +27,6 @@ function Invitation() {
       setMessage(res.message);
     } else {
       setMessage(res.message || "Failed to invite user");
-    }
-  };
-
-  const handleUsersList = async () => {
-    const res = await getUsersList(docId);
-    if (res) {
-      setUsersList(res);
     }
   };
 
