@@ -3,28 +3,38 @@ const path = "http://localhost:" + port;
 //const path = "https://jsramverk-hagt21-fdbhdnf5hrgrcbcc.northeurope-01.azurewebsites.net/"
 
 export async function getAllData() {
-    try {
-        // Token hämtas från localStorage
-        const token = localStorage.getItem("token");
-        const res = await fetch(`${path}/`, {
-            headers: {
-                "Content-Type": "application/json",
-                "x-access-token": token
-            }
-        });
-        return res.json();
+    const token = localStorage.getItem("token");
 
-    } catch (err) {
-        console.error("Failed to fetch documents:", err)
+    const res = await fetch(`${path}/`, {
+        headers: { "x-access-token": token }
+    });
+
+    const data = await res.json();
+
+    if (res.status === 401) {
+        let message = "Unauthorized";
+
+        // Om backend skickar felmeddelande, används den ist.
+        if (data && data.errors && data.errors.title) {
+            message = data.errors.title;
+        }
+
+        const error = new Error(message);
+        // Lägger till status egenskap för att användas när token går ut.
+        // Fångas i Docs och leder till automatisk logout.
+        error.status = 401;
+        throw error;
     }
+
+    return data;
 }
+
 
 export async function getOne(id) {
     try {
         const token = localStorage.getItem("token");
         const res = await fetch(`${path}/${id}`, {
             headers: {
-                "Content-type": "application/json",
                 "x-access-token": token
             }
         });
@@ -112,5 +122,21 @@ export async function register(body) {
         return res.json();
     } catch (err) {
         console.error("Invitation failed:", err)
+    }
+}
+
+export async function getUsersList(docId) {
+    try {
+        const token = localStorage.getItem("token");
+        const res = await fetch(`${path}/users/${docId}`, {
+            method: "GET",
+            headers: {
+                "x-access-token": token
+            },
+        });
+
+        return res.json();
+    } catch (err) {
+        console.error("Fetching users failed:", err)
     }
 }

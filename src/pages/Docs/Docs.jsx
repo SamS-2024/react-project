@@ -8,7 +8,6 @@ function Docs() {
   const [token, setToken] = useState(localStorage.getItem("token"));
 
   const navigate = useNavigate();
-
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
     setToken(storedToken);
@@ -21,7 +20,13 @@ function Docs() {
           setData(result.docs);
         }
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        // Om token går ut och backend skickar 401.
+        if (err.status === 401) {
+          logout();
+        }
+        console.error(err);
+      });
   }, []);
 
   const logout = () => {
