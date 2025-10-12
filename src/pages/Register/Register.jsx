@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { register } from "../../api/data";
 
 import "../Login/Login.css";
@@ -7,13 +7,18 @@ import "../Login/Login.css";
 function Register() {
   const navigate = useNavigate();
 
+  // Hämtar docId från url.
+  const params = useParams();
+  const docId = params.docId;
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    const result = await register({ email, password });
+    // Möjlighet att registrera sig själv eller bli inbjuden till dokument (docId).
+    const result = await register({ email, password, docId: docId || null });
 
     if (result.data) {
       navigate("/login");

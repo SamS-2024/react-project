@@ -16,6 +16,8 @@ function Login() {
     const result = await login({ email, password });
     if (result.data && result.data.token) {
       localStorage.setItem("token", result.data.token);
+      // Endast för visning i frontend så det syns vem som har loggat in.
+      localStorage.setItem("email", email);
 
       navigate("/");
     } else {

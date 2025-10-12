@@ -6,17 +6,24 @@ import "./Docs.css";
 function Docs() {
   const [data, setData] = useState([]);
   const [token, setToken] = useState(localStorage.getItem("token"));
+  const [email, setEmail] = useState("");
 
   const navigate = useNavigate();
 
   const logout = useCallback(() => {
     localStorage.removeItem("token");
+    // Tar bort email-visningen
+    localStorage.removeItem("email");
     navigate("/login");
   }, [navigate]);
 
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
     setToken(storedToken);
+
+    // För endast visning av inloggad användare.
+    const storedEmail = localStorage.getItem("email");
+    setEmail(storedEmail || "");
 
     if (!storedToken) return;
 
@@ -40,6 +47,7 @@ function Docs() {
       {token ? (
         <div>
           <h1>Documents</h1>
+          {email && <h2>Welcome {email}</h2>}
           <table>
             <thead>
               <tr>

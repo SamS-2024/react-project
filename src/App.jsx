@@ -33,6 +33,7 @@ function App() {
       socket.current.disconnect();
     };
   }, []);
+
   return (
     <>
       <Router>
@@ -41,7 +42,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Docs />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+            <Route path="/register/:docId?" element={<Register />} />
             <Route path="/view/:id" element={<ViewDoc />} />
             <Route path="/add" element={<AddDoc />} />
             <Route path="/search" element={<Search />} />
