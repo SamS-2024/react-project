@@ -1,10 +1,9 @@
 import { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
-import { invite, getUsersList } from "../../api/data.js";
-import "./Invitation.css";
+import { inviteInternal, getUsersList } from "../../api/data.js";
+import "../Invitation/Invitation.css";
 
-function Invitation() {
-  // Hämtar dokumentets id från URL
+function InviteInternal() {
   const { id: docId } = useParams();
   const [userEmail, setUserEmail] = useState("");
   const [message, setMessage] = useState("");
@@ -12,9 +11,7 @@ function Invitation() {
 
   const handleUsersList = useCallback(async () => {
     const res = await getUsersList(docId);
-    if (res) {
-      setUsersList(res);
-    }
+    if (res) setUsersList(res);
   }, [docId]);
 
   useEffect(() => {
@@ -22,9 +19,10 @@ function Invitation() {
   }, [handleUsersList]);
 
   const handleInvite = async () => {
-    const res = await invite(docId, userEmail);
+    const res = await inviteInternal(docId, userEmail);
     if (res.success) {
       setMessage(res.message);
+      handleUsersList();
     } else {
       setMessage(res.message || "Failed to invite user");
     }
@@ -32,7 +30,7 @@ function Invitation() {
 
   return (
     <div className="invitation-container">
-      <h1>Invite user to document</h1>
+      <h1>Invite internal user to document</h1>
       <input
         value={userEmail}
         onChange={(e) => setUserEmail(e.target.value)}
@@ -41,7 +39,6 @@ function Invitation() {
       <button
         onClick={async () => {
           await handleInvite();
-          // Rensar inputfältet efter att användaren bjudits in.
           setUserEmail("");
         }}
       >
@@ -51,27 +48,19 @@ function Invitation() {
 
       <div className="users-list">
         <ul>
-          {/* Visar ägare */}
-          <li key="users-header" className="users">
-            Owner:
-          </li>
-          <li key="owner">{usersList.owner}</li>
+          <li className="users">Owner:</li>
+          <li>{usersList.owner}</li>
 
-          {/* Visar allowedUsers som lista */}
-          {Array.isArray(usersList.allowedUsers) &&
-            usersList.allowedUsers.length > 0 && (
-              <>
-                <li key="users-header" className="users">
-                  Users:
-                </li>
-                {usersList.allowedUsers.map((user) => {
-                  return <li key={user}>{user}</li>;
-                })}
-              </>
-            )}
+          {usersList.allowedUsers.length > 0 && (
+            <>
+              <li className="users">Users:</li>
+              {usersList.allowedUsers.map((user) => (
+                <li key={user}>{user}</li>
+              ))}
+            </>
+          )}
 
-          {/* Om allowedUsers saknas */}
-          {(!usersList.allowedUsers || usersList.allowedUsers.length === 0) && (
+          {usersList.allowedUsers.length === 0 && (
             <li className="invite-message">No collaborators yet.</li>
           )}
         </ul>
@@ -80,4 +69,4 @@ function Invitation() {
   );
 }
 
-export default Invitation;
+export default InviteInternal;

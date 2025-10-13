@@ -12,6 +12,7 @@ import CodeEditor from "./pages/CodeEditor/CodeEditor.jsx";
 import Login from "./pages/Login/Login.jsx";
 import Register from "./pages/Register/Register.jsx";
 import Invitation from "./pages/Invitation/Invitaion.jsx";
+import InviteInternal from "./pages/InviteInternal/InviteInternal.jsx";
 import "./App.css";
 
 const port = import.meta.env.VITE_PORT;
@@ -49,6 +50,7 @@ function App() {
             <Route path="/update/:id" element={<Update socket={socket} />} />
             <Route path="/code/:id" element={<CodeEditor socket={socket} />} />
             <Route path="/invite/:id" element={<Invitation />} />
+            <Route path="/invite-internal/:id" element={<InviteInternal />} />
           </Routes>
         </main>
       </Router>
