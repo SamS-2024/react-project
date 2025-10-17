@@ -15,6 +15,7 @@ function CodeEditor({ socket }) {
   const [loading, setLoading] = useState(true);
   const [running, setRunning] = useState(false);
   const [comments, setComments] = useState([]);
+  const [editorReady, setEditorReady] = useState(false);
 
   const editorRef = useRef(null);
   const monacoRef = useRef(null);
@@ -22,6 +23,7 @@ function CodeEditor({ socket }) {
   const handleEditorDidMount = (editor, monaco) => {
     editorRef.current = editor;
     monacoRef.current = monaco;
+    setEditorReady(true);
 
     // Handle click on line numbers → add comment
     editor.onMouseDown((e) => {
@@ -83,7 +85,12 @@ function CodeEditor({ socket }) {
   }, [id, socket.current]);
 
   useEffect(() => {
-    if (!editorRef.current || !monacoRef.current) return;
+    if (!editorReady || !editorRef.current || !monacoRef.current) return;
+
+    if (!comments || comments.length === 0) {
+      editorRef.current.deltaDecorations([], []);
+      return;
+    }
 
     const decorations = comments.map((c) => ({
       range: new monacoRef.current.Range(c.lineNumber, 1, c.lineNumber, 1),
@@ -95,7 +102,7 @@ function CodeEditor({ socket }) {
     }));
 
     editorRef.current.deltaDecorations([], decorations);
-  }, [comments]);
+  }, [editorReady, comments]);
 
   const handleRun = async () => {
     setRunning(true);
@@ -178,10 +185,12 @@ function CodeEditor({ socket }) {
         {[...comments]
         .sort((a, b) => a.lineNumber - b.lineNumber)
         .map((c, i) => {
-          const lineCount = editorRef.current
-            ? editorRef.current.getModel().getLineCount()
-            : 0;
-          const lineExists = c.lineNumber <= lineCount;
+          const model = editorRef.current?.getModel();
+          const lineCount = model?.getLineCount?.() || null;
+
+          // If editor not ready yet, assume line exists temporarily
+          const lineExists =
+            lineCount === null || c.lineNumber <= lineCount;
 
           return (
             <div
