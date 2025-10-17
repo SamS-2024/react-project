@@ -1,45 +1,153 @@
-.update-container {
-  max-width: fit-content;
-  margin: 2rem auto;
-  padding: 1.5rem;
-  border-radius: 10px;
-  background-color: #f9f9f9;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 70vh;
+    color: #ccc;
 }
 
-.update-container input,
-.update-container textarea {
-  padding: 0.6rem 0.8rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 1rem;
-  width: 100%;
-  box-sizing: border-box;
+.spinner {
+    border: 4px solid #333;
+    border-top: 4px solid #7b019d;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin-bottom: 10px;
 }
 
-.update-container textarea {
-  min-height: 100px;
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
 }
 
-.update-btn {
-  color: white;
-  border: none;
-  padding: 0.7rem;
-  cursor: pointer;
-  font-size: 14px;
-  border-radius: 4px;
-  transition: background-color 0.3s ease;
-  max-width: 500px;
-  width: 100%;
-  margin: auto;
+.monaco-editor .margin .has-comment {
+    border-left: 3px solid #ffa500;
 }
 
-.update-btn {
-  background-color: #0e6691;
+/* === Layout === */
+.code-editor-container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 1rem;
 }
-.update-btn:hover {
-  background-color: #034160;
+
+.editor-section {
+    flex: 3;
+    min-width: 0;
+}
+
+.update-comments-sidebar {
+    flex: 1;
+    background-color: #f7f7f7;
+    border: 1px solid #e6e6e6;
+    border-radius: 8px;
+    padding: 0.8rem;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: inset 0 0 6px rgba(165, 165, 165, 0.4);
+    color: #d4d4d4;
+}
+
+.update-comments-sidebar h3 {
+    color: #ffa600;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.update-no-comments {
+    text-align: center;
+    font-style: italic;
+    color: #777;
+}
+
+/* === Comment Cards === */
+.update-comment-card {
+    background-color: #ffffff;
+    border: 1px solid #a4a4a4;
+    border-radius: 6px;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.update-comment-card:hover {
+    background-color: #f4f4f4;
+    transform: scale(1.01);
+}
+
+.update-comment-line {
+    font-size: 0.85rem;
+    color: #ffa500;
+    font-weight: bold;
+    margin-bottom: 0.2rem;
+}
+
+.update-comment-content {
+    font-size: 0.9rem;
+    color: black;
+    margin: 0;
+}
+
+.update-comment-author {
+    font-size: 0.8rem;
+    color: black;
+    margin-top: 0.3rem;
+}
+
+.update-comment-timestamp {
+    font-size: 0.75rem;
+    color: black;
+    margin-top: 0.2rem;
+}
+
+.update-hover-highlight-line {
+    background-color: rgba(255, 239, 181, 0.25) !important;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.update-comment-disabled {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.update-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 0.5rem;
+}
+
+.update-title-input {
+    margin: 1rem;
+    padding: 0.6rem 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.update-btn-update {
+    color: white;
+    border: none;
+    padding: 0.7rem;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    float: right;
+    margin: 0 0 0.5rem 0.5rem;
+}
+
+.update-btn-update {
+    background-color: #0e6691;
+}
+.update-btn-update:hover {
+    background-color: #034160;
 }

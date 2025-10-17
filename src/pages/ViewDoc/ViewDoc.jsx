@@ -43,7 +43,7 @@ function ViewDoc() {
   };
 
   return (
-    <div className="update-container">
+    <div className="view-container">
       <h2>Document {id}</h2>
       <input
         value={title}
