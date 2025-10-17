@@ -55,9 +55,6 @@ function Update({ socket }) {
   // Sockets
   useEffect(() => {
     if (!id || !socket.current) {
-      console.log("No id or socket");
-      console.log(id);
-      console.log(socket);
       return;
     }
     // Eslint vill att det sparas i en variabel
