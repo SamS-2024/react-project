@@ -83,7 +83,7 @@ function Update({ socket }) {
       soc.off("loadComments");
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
+  }, [id, socket.current]);
 
   useEffect(() => {
     if (!editorReady || !editorRef.current || !monacoRef.current) return;
