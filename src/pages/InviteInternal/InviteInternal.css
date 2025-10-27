@@ -1,0 +1,67 @@
+
+.users-list-second {
+  margin-top: 2rem;
+  padding: 1rem;
+  background-color: #F2F2F7;
+  border-radius: 8px;
+  width: 100%;
+}
+
+.users-list-second ul {
+  padding: 0;
+  list-style: none;
+}
+
+.users-list-second li {
+  padding: 0.5rem 1rem;
+  margin-bottom: 0.25rem;
+  border-radius: 6px;
+  font-size: 0.95rem;
+}
+
+.invite-message {
+  margin-top: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: #d4edda;
+  color: #155724;
+  border-radius: 6px;
+  font-size: 0.95rem;
+}
+.users{
+    font-weight: bold;
+    display: block;
+}
+
+.invitation-container-second input {
+  width: 250px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 8px;
+  font-size: 0.9rem;
+}
+.invitation-container-second {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+.invite-left {
+  flex: 1;
+  max-width: 400px;
+}
+
+@media (max-width: 768px) {
+  .invitation-container-second {
+    flex-direction: column;
+  }
+
+  .invite-left,
+  .users-list-second {
+    max-width: 100%;
+  }
+
+  .users-list-second {
+    margin-top: 1rem;
+  }
+}

@@ -1,0 +1,48 @@
+.users-list {
+  margin-top: 1rem;
+  padding: 0;
+  background-color: #F2F2F7;
+  border-radius: 8px;
+  margin-top: 2rem;
+}
+
+.users-list ul {
+  padding: 0;
+  list-style: none;
+}
+
+.users-list li {
+  padding: 0.5rem 1rem;
+  margin-bottom: 0.25rem;
+  border-radius: 6px;
+  font-size: 0.95rem;
+}
+
+.invitation-container input {
+  width: 250px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 8px;
+  font-size: 0.9rem;
+}
+
+.invite-message {
+  margin-top: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: #d4edda;
+  color: #155724;
+  border-radius: 6px;
+  font-size: 0.95rem;
+}
+.users{
+    font-weight: bold;
+    display: block;
+}
+
+.invitation-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}

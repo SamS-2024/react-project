@@ -1,0 +1,44 @@
+.members-container {
+  border: 1px solid #ddd;
+  padding: 16px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  width: 250px;
+  margin-left: 5rem; /* avstånd från InviteInternal */
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-family: Arial, sans-serif;
+}
+
+.members-container h1 {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+}
+
+.members-container .invite-message {
+  color: #444;
+  font-size: 0.9rem;
+}
+
+.members-container .users-list {
+  max-height: 300px;
+  overflow-y: auto; /* scroll */
+  overflow-x: hidden;
+}
+
+.members-container .users-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.members-container .users-list li {
+  padding: 6px 8px;
+  border-bottom: 1px solid #eee;
+  font-size: 0.95rem;
+  background-color: #fff;
+  border-radius: 4px;
+  margin-bottom: 4px;
+  width: 250px;
+}

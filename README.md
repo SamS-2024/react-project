@@ -1,6 +1,7 @@
 # React frontend
 
 ## Relevant information
+
 This is the frontend repository for course DV1677 JSRamverk at BTH
 
 Link to backend repository: https://github.com/Hampe024/ssr-editor
@@ -80,3 +81,28 @@ npx Cypress open
 - Create test files inside the cypress/e2e folder.
 
 - Repeat the steps above to run your new tests.
+
+## Real-time Communication
+
+Enable real-time collaborative editing using `Socket.IO Client`.
+
+### Installation
+
+```
+npm install --save socket.io-client
+```
+
+### Initialization
+
+- Import the client and connect to the server using SERVER_URL.
+
+- Use useEffect to initialize the socket whenever the selected document changes.
+
+- Disconnect the socket on cleanup.
+
+### Rooms
+
+- Each document has its own room identified by a unique document ID.
+- Clients join a room when opening a document.
+- Server listens for "join room" events and adds the socket to the correct room.
+- Updates to a document are broadcasted only to clients in the same room.

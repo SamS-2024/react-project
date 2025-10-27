@@ -1,17 +1,20 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useRef, useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import Editor from "@monaco-editor/react";
 import { getOne } from "../../api/data";
+import Editor from "@monaco-editor/react";
+import "./CodeEditor.css";
+import { execJs } from "../../api/execjs";
 
-import "./Update.css";
-
-function Update({ socket }) {
+function CodeEditor({ socket }) {
   const { id } = useParams(); // Hämtar id från URL.
   const navigate = useNavigate();
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [output, setOutput] = useState("");
   const [loading, setLoading] = useState(true);
+  const [running, setRunning] = useState(false);
   const [comments, setComments] = useState([]);
   const [editorReady, setEditorReady] = useState(false);
 
@@ -53,12 +56,15 @@ function Update({ socket }) {
 
   // Sockets
   useEffect(() => {
-    const soc = socket.current;
-
-    if (!id || !soc) {
+    if (!id || !socket.current) {
+      console.log("No id or socket");
+      console.log(id);
+      console.log(socket);
       return;
     }
-
+    // Eslint vill att det sparas i en variabel
+    // som används i clean up.
+    const soc = socket.current;
     // Joina rum.
     soc.emit("create", id);
     // Skapar en eventlyssnare för "doc"
@@ -82,7 +88,6 @@ function Update({ socket }) {
       soc.off("newComment");
       soc.off("loadComments");
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, socket.current]);
 
   useEffect(() => {
@@ -105,6 +110,21 @@ function Update({ socket }) {
     editorRef.current.deltaDecorations([], decorations);
   }, [editorReady, comments]);
 
+  const handleRun = async () => {
+    setRunning(true);
+    setOutput("");
+
+    try {
+      const res = await execJs(content);
+      setOutput(res);
+    } catch (err) {
+      setOutput("Error running code.");
+      console.error(err);
+    } finally {
+      setRunning(false);
+    }
+  };
+
   const redirectToDocs = () => {
     navigate("/");
   };
@@ -125,34 +145,24 @@ function Update({ socket }) {
   return (
     <div className="code-editor-container">
       <div className="editor-section">
-        <div className="update-actions">
-          <div>
-            <h2>Update document {id}</h2>
-            <input
-              className="update-title-input"
-              value={title}
-              onChange={(e) => {
-                setTitle(e.target.value);
-                socket.current.emit("doc", {
-                  _id: id,
-                  title: e.target.value,
-                  content,
-                });
-              }}
-              placeholder="Title"
-            />
-          </div>
-          <div>
-            <button className="update-btn-update" onClick={redirectToDocs}>
-              Docs
-            </button>
-          </div>
+        <h2>Code Editor for document {id}</h2>
+        <div className="editor-actions">
+          <button
+            className="run-btn-code"
+            onClick={handleRun}
+            disabled={running}
+          >
+            {running ? "Running..." : "Run code"}
+          </button>
+          <button className="update-btn-code" onClick={redirectToDocs}>
+            Docs
+          </button>
         </div>
 
         <Editor
-          height="80vh"
-          defaultLanguage="plaintext"
-          theme="vs-light"
+          height="60vh"
+          defaultLanguage="javascript"
+          theme="vs-dark"
           value={content}
           onMount={handleEditorDidMount}
           onChange={(value) => {
@@ -162,40 +172,24 @@ function Update({ socket }) {
             }
           }}
           options={{
-            wordWrap: "on",
+            padding: { top: 16 },
             minimap: { enabled: false },
-            padding: { top: 16, bottom: 16 },
-            fontSize: 16,
-            fontFamily: "Arial, sans-serif",
-            cursorStyle: "line",
-            scrollBeyondLastLine: false,
-            renderLineHighlight: "none",
-            automaticLayout: true,
-
-            suggestOnTriggerCharacters: false,
-            quickSuggestions: false,
-            parameterHints: { enabled: false },
-            acceptSuggestionOnEnter: "off",
-            tabCompletion: "off",
-            wordBasedSuggestions: false,
-
-            overviewRulerLanes: 0,
-            scrollbar: {
-              vertical: "visible",
-              horizontal: "visible",
-              handleMouseWheel: true,
-              alwaysConsumeMouseWheel: false,
-              verticalHasArrows: false,
-              horizontalHasArrows: false,
-              arrowSize: 0,
-              verticalScrollbarSize: 12,
-              horizontalScrollbarSize: 12,
-            },
+            lineNumbers: "on",
           }}
         />
+
+        <h3>Output:</h3>
+        {running ? (
+          <div className="output-loading">
+            <div className="spinner"></div>
+            <p>Running code...</p>
+          </div>
+        ) : (
+          <pre className="output-box">{output}</pre>
+        )}
       </div>
 
-      <div className="update-comments-sidebar">
+      <div className="comments-sidebar">
         <h3>Comments</h3>
         {comments.length === 0 && (
           <p className="no-comments">No comments yet</p>
@@ -203,16 +197,17 @@ function Update({ socket }) {
         {[...comments]
           .sort((a, b) => a.lineNumber - b.lineNumber)
           .map((c, i) => {
-            const lineCount = editorRef.current
-              ? editorRef.current.getModel().getLineCount()
-              : 0;
-            const lineExists = c.lineNumber <= lineCount;
+            const model = editorRef.current?.getModel();
+            const lineCount = model?.getLineCount?.() || null;
+
+            // If editor not ready yet, assume line exists temporarily
+            const lineExists = lineCount === null || c.lineNumber <= lineCount;
 
             return (
               <div
                 key={i}
-                className={`update-comment-card ${
-                  !lineExists ? "update-comment-disabled" : ""
+                className={`comment-card ${
+                  !lineExists ? "comment-disabled" : ""
                 }`}
                 onMouseEnter={() => {
                   if (!lineExists) return;
@@ -229,7 +224,7 @@ function Update({ socket }) {
                           ),
                           options: {
                             isWholeLine: true,
-                            className: "update-hover-highlight-line",
+                            className: "hover-highlight-line",
                           },
                         },
                       ]
@@ -247,12 +242,12 @@ function Update({ socket }) {
                   editorRef.current.revealLineInCenter(c.lineNumber);
                 }}
               >
-                <p className="update-comment-line">
+                <p className="comment-line">
                   Line {lineExists ? c.lineNumber : "deleted"}
                 </p>
-                <p className="update-comment-content">💬 {c.content}</p>
-                <p className="update-comment-author">{c.author}</p>
-                <p className="update-comment-timestamp">
+                <p className="comment-content">💬 {c.content}</p>
+                <p className="comment-author">{c.author}</p>
+                <p className="comment-timestamp">
                   {new Date(c.createdAt).toLocaleString()}
                 </p>
               </div>
@@ -263,4 +258,4 @@ function Update({ socket }) {
   );
 }
 
-export default Update;
+export default CodeEditor;
