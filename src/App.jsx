@@ -16,10 +16,11 @@ import InviteInternal from "./pages/InviteInternal/InviteInternal.jsx";
 import { AuthContext } from "./context/AuthContext.jsx";
 import "./App.css";
 
-const port = import.meta.env.VITE_PORT;
-const SERVER_URL = "http://localhost:" + port;
-// const SERVER_URL =
-//   "https://jsramverk-hagt21-fdbhdnf5hrgrcbcc.northeurope-01.azurewebsites.net/";
+// const port = import.meta.env.VITE_PORT;
+// const SERVER_URL = "http://localhost:" + port;
+
+const SERVER_URL =
+  "https://jsramverk-hagt21-fdbhdnf5hrgrcbcc.northeurope-01.azurewebsites.net/";
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem("token"));
