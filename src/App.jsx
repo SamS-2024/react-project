@@ -1,6 +1,6 @@
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import { io } from "socket.io-client";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Header from "./components/Header/Header.jsx";
 import Footer from "./components/Footer/Footer.jsx";
 import Docs from "./pages/Docs/Docs.jsx";
@@ -13,32 +13,41 @@ import Login from "./pages/Login/Login.jsx";
 import Register from "./pages/Register/Register.jsx";
 import Invitation from "./pages/Invitation/Invitation.jsx";
 import InviteInternal from "./pages/InviteInternal/InviteInternal.jsx";
+import { AuthContext } from "./context/AuthContext.jsx";
 import "./App.css";
 
-// const port = import.meta.env.VITE_PORT;
-// const SERVER_URL = "http://localhost:" + port;
-const SERVER_URL =
-  "https://jsramverk-hagt21-fdbhdnf5hrgrcbcc.northeurope-01.azurewebsites.net/";
+const port = import.meta.env.VITE_PORT;
+const SERVER_URL = "http://localhost:" + port;
+// const SERVER_URL =
+//   "https://jsramverk-hagt21-fdbhdnf5hrgrcbcc.northeurope-01.azurewebsites.net/";
 
 function App() {
+  const [token, setToken] = useState(localStorage.getItem("token"));
   // Skapar en referens till socket-anslutningen
   const socket = useRef(null);
 
   useEffect(() => {
-    socket.current = io(SERVER_URL, {
-      // Skickar token till backend för att kunna hantera update doc.
-      auth: {
-        token: localStorage.getItem("token"),
-      },
+    if (!token) return;
+
+    // Stänger gammal anslutning innan ny skapas.
+    if (socket.current) {
+      socket.current.disconnect();
+    }
+
+    const soc = io(SERVER_URL, {
+      auth: { token },
     });
 
+    socket.current = soc;
+
     return () => {
-      socket.current.disconnect();
+      // Stänger socket när komponenten avmonteras.
+      soc.disconnect();
     };
-  }, []);
+  }, [token]);
 
   return (
-    <>
+    <AuthContext.Provider value={{ token, setToken }}>
       <Router>
         <Header />
         <main>
@@ -57,7 +66,7 @@ function App() {
         </main>
       </Router>
       <Footer />
-    </>
+    </AuthContext.Provider>
   );
 }
 

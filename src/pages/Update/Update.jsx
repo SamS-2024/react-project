@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useRef, useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Editor from "@monaco-editor/react";
@@ -54,12 +53,12 @@ function Update({ socket }) {
 
   // Sockets
   useEffect(() => {
-    if (!id || !socket.current) {
+    const soc = socket.current;
+
+    if (!id || !soc) {
       return;
     }
-    // Eslint vill att det sparas i en variabel
-    // som används i clean up.
-    const soc = socket.current;
+
     // Joina rum.
     soc.emit("create", id);
     // Skapar en eventlyssnare för "doc"
@@ -83,7 +82,8 @@ function Update({ socket }) {
       soc.off("newComment");
       soc.off("loadComments");
     };
-  }, [id, socket.current]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
 
   useEffect(() => {
     if (!editorReady || !editorRef.current || !monacoRef.current) return;
